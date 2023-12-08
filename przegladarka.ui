@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuPlik">
+    <property name="title">
+     <string>Plik</string>
+    </property>
+    <addaction name="actionOtw_rz"/>
+    <addaction name="actionZamknij"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuEdytuj">
+    <property name="title">
+     <string>Edytuj</string>
+    </property>
+    <addaction name="actionNast_pny_2"/>
+    <addaction name="actionPoprzedni_2"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuPomoc">
+    <property name="title">
+     <string>Pomoc</string>
+    </property>
+    <widget class="QMenu" name="menuNie_klikaj">
+     <property name="title">
+      <string>Nie klikaj</string>
+     </property>
+     <addaction name="actionNo_dobra"/>
+    </widget>
+    <addaction name="menuNie_klikaj"/>
+    <addaction name="separator"/>
+   </widget>
+   <addaction name="menuPlik"/>
+   <addaction name="menuEdytuj"/>
+   <addaction name="menuPomoc"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOtw_rz">
+   <property name="text">
+    <string>Otwórz</string>
+   </property>
+  </action>
+  <action name="actionZamknij">
+   <property name="text">
+    <string>Zamknij</string>
+   </property>
+  </action>
+  <action name="actionNast_pny">
+   <property name="text">
+    <string>Następny</string>
+   </property>
+  </action>
+  <action name="actionPoprzedni">
+   <property name="text">
+    <string>Poprzedni</string>
+   </property>
+  </action>
+  <action name="actionNast_pny_2">
+   <property name="text">
+    <string>Następny</string>
+   </property>
+  </action>
+  <action name="actionPoprzedni_2">
+   <property name="text">
+    <string>Poprzedni</string>
+   </property>
+  </action>
+  <action name="actionNo_dobra">
+   <property name="text">
+    <string>No dobra</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
