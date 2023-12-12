@@ -62,6 +62,11 @@ class Login(QMainWindow):
         filename = os.path.basename(parsed_url.path)
         print()
         files = os.listdir("./galeria")
+        for el in files:
+            
+            if (os.path.splitext(el))[1] not in imageExtensions:
+                print((os.path.splitext(el))[1])
+                files.remove(el)
         print((os.path.splitext(dialog[0]))[1], (os.path.splitext(dialog[0]))[1] in imageExtensions)
         if filename in files and (os.path.splitext(dialog[0]))[1] in imageExtensions:
             index = files.index(filename)
@@ -90,17 +95,24 @@ class Login(QMainWindow):
         # Uzyskaj ostatni segment ścieżki, który powinien być nazwą pliku
         filename = os.path.basename(parsed_url.path)
         print()
-        files = os.listdir("./galeria")
+        files = os.listdir(dialog[0].replace(filename, ""))
+        print(files)
+        for el in files:
+            print(files, "el")
+            if (os.path.splitext(el))[1] not in imageExtensions:
+                print((os.path.splitext(el))[1])
+                files.remove(el)
+                print(files)
         print((os.path.splitext(filename))[1], (os.path.splitext(filename))[1] in imageExtensions)
         if filename in files and (os.path.splitext(filename))[1] in imageExtensions:
             index = files.index(filename)
             print(index)
             length = len(files)-2
             print(length)
-            if index <= length:
+            if index <= length+1:
                 dialog = [dialog[0].replace(filename, files[index-1]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
-            else:
-                dialog = [dialog[0].replace(filename, files[0]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
+            elif index == 0:
+                dialog = [dialog[0].replace(filename, files[5]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
             print(dialog)
             file_path = dialog[0]
             
