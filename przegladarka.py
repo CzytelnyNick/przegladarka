@@ -16,6 +16,7 @@ import sys, os
 import subprocess
 from urllib.parse import urlparse
 imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp"]
+filesArr = []
 class Login(QMainWindow):
     def __init__(self):
         global dialog
@@ -28,9 +29,14 @@ class Login(QMainWindow):
         self.ui = uic.loadUi("przegladarka.ui", self)
         # self.ui.buttonLog.clicked.connect(self.autoryzacja)
         toolbar = QToolBar("My main toolbar")
-        button1 = QAction(QIcon("explorer.svg"), "1Your button", self)
-        button2 = QAction(QIcon("larrow.svg"), "2Your button", self)
-        button3 = QAction(QIcon("rarrow.svg"), "3Your button", self)
+        button1 = QAction(QIcon("./explorer.png"), "1Your button", self)
+        button2 = QAction(QIcon("larrow.png"), "2Your button", self)
+        button3 = QAction(QIcon("rarrow.png"), "3Your button", self)
+        self.ui.actionOtw_rz.triggered.connect(self.openFileExplorer)
+        self.ui.actionZamknij.triggered.connect(exit)
+        self.ui.actionNast_pny_2.triggered.connect(self.nextImg)
+        self.ui.actionPoprzedni_2.triggered.connect(self.prevImg)
+        self.ui.menuNie_klikaj.triggered.connect(self.skinnyRatEvent)
         button1.triggered.connect(self.openFileExplorer)
         button2.triggered.connect(self.prevImg)
         button3.triggered.connect(self.nextImg)
@@ -61,22 +67,20 @@ class Login(QMainWindow):
         # Uzyskaj ostatni segment ścieżki, który powinien być nazwą pliku
         filename = os.path.basename(parsed_url.path)
         print()
-        files = os.listdir("./galeria")
-        for el in files:
-            
-            if (os.path.splitext(el))[1] not in imageExtensions:
-                print((os.path.splitext(el))[1])
-                files.remove(el)
+        files = os.listdir(dialog[0].replace(filename, ""))
+        print(files)
+        
         print((os.path.splitext(dialog[0]))[1], (os.path.splitext(dialog[0]))[1] in imageExtensions)
         if filename in files and (os.path.splitext(dialog[0]))[1] in imageExtensions:
-            index = files.index(filename)
+            
+            index = filesArr.index(filename)
             print(index)
-            length = len(files)-2
+            length = len(filesArr)
             print(length)
-            if index <= length:
-                dialog = [dialog[0].replace(filename, files[index+1]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
+            if index < length-1:
+                dialog = [dialog[0].replace(filename, filesArr[index+1]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
             else:
-                dialog = [dialog[0].replace(filename, files[0]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
+                dialog = [dialog[0].replace(filename, filesArr[0]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
             print(dialog)
             file_path = dialog[0]
             
@@ -97,24 +101,20 @@ class Login(QMainWindow):
         print()
         files = os.listdir(dialog[0].replace(filename, ""))
         print(files)
-        for el in files:
-            print(files, "el")
-            if (os.path.splitext(el))[1] not in imageExtensions:
-                print((os.path.splitext(el))[1])
-                files.remove(el)
-                print(files)
+        
         print((os.path.splitext(filename))[1], (os.path.splitext(filename))[1] in imageExtensions)
         if filename in files and (os.path.splitext(filename))[1] in imageExtensions:
-            index = files.index(filename)
+            index = filesArr.index(filename)
             print(index)
-            length = len(files)-2
+            length = len(filesArr)
             print(length)
-            if index <= length+1:
-                dialog = [dialog[0].replace(filename, files[index-1]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
-            elif index == 0:
-                dialog = [dialog[0].replace(filename, files[5]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
+            if index < length-1:
+                dialog = [dialog[0].replace(filename, filesArr[index-1]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
+            else:
+                dialog = [dialog[0].replace(filename, filesArr[0]), "JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)"]
             print(dialog)
             file_path = dialog[0]
+            
             
 
             img = QPixmap(file_path)
@@ -135,9 +135,23 @@ class Login(QMainWindow):
     def openFileExplorer(self):
         global dialog
         global imageExtensions
-        
+        global filesArr
+        filesArr = []
         dialog = QFileDialog.getOpenFileName(directory="./galeria", filter="JPG (*.jpg);;BMP (*.bmp);;CUR (*.cur);;GIF (*.gif);;ICNS (*.icns);;ICO (*.ico);;JPEG (*.jpeg);;PBM (*.pbm);;PGM (*.pgm);;PNG (*.png);;PPM (*.ppm);;SVG (*.svg);;SVGZ (*.svgz);;TGA (*.tga);;TIF (*.tif);;TIFF (*.tiff);;WBMP (*.wbmp);;WEBP (*.webp);;XBM (*.xbm);;XPM (*.xpm)")
         print(dialog)
+        parsed_url = urlparse(dialog[0])
+        print(parsed_url)
+        # Uzyskaj ostatni segment ścieżki, który powinien być nazwą pliku
+        filename = os.path.basename(parsed_url.path)
+        print()
+        files = os.listdir(dialog[0].replace(filename, ""))
+        print(files)
+        for el in files:
+            print(el, "Element")
+            if (os.path.splitext(el))[1] in imageExtensions:
+                print((os.path.splitext(el))[1])
+                filesArr.append(el)
+        print(filesArr)
         if (os.path.splitext(dialog[0]))[1] in imageExtensions:
             file_path = dialog[0]
             
@@ -148,7 +162,11 @@ class Login(QMainWindow):
             self.setFixedSize(file_size[0]+100,file_size[1]+100)
             # Use self.imageContainer instead of local imageContainer
             self.imageContainer.setPixmap(img)
-
+    def skinnyRatEvent(self):
+        
+        file_path = "./typowyszczur.jpg"
+        img = QPixmap(file_path)
+        self.imageContainer.setPixmap(img)
 app = QApplication(sys.argv)
 logowanie = Login()
 sys.exit(app.exec())
